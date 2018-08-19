@@ -1,0 +1,55 @@
+{% load staticfiles %}
+{% load i18n %}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <title>Precio oficial de onixcoin</title>
+
+    <link rel="shortcut icon" href="{% static 'calculator/images/favicon.ico' %}">
+
+    <link rel="stylesheet" type="text/css" href="{% static 'calculator/css/fontawesome-all.min.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'calculator/css/bootstrap.min.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'calculator/css/mdb.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'calculator/css/style.css' %}">
+
+</head>
+<body style="background-size:100%; background-repeat: no-repeat; 
+background-image:url({% static 'calculator/images/bg.jpg' %}">
+
+{% include 'calculator/component/header.html' %}
+
+<main>
+	
+	{% block modal %}
+
+	{% endblock %}
+	<section class="container-fluid" style="margin:0; z-index:10; position:relative;">
+		{% block content %}
+
+		{% endblock %}
+
+	</section>
+	<canvas class="background"></canvas>
+</main>
+<footer>
+
+</footer>
+</body>
+
+<script src="{% static 'calculator/js/vue.js' %}"></script>
+<script src="{% static 'calculator/js/vue-axios.js' %}"></script>
+
+<script src="{% static 'calculator/js/jquery.js' %}"></script>
+<script src="{% static 'calculator/js/popper.min.js' %}"></script>
+<script src="{% static 'calculator/js/bootstrap.js' %}"></script>
+<script src="{% static 'calculator/js/mdb.min.js' %}"></script>
+
+{% block js %}
+
+{% endblock %}
+</html>

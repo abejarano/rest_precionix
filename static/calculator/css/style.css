@@ -1,0 +1,18 @@
+@font-face{font-family: Font;src: url('../fonts/Roboto-Medium.ttf');}
+@font-face{font-family: FontBold;src: url('../fonts/Roboto-BoldCondensed.ttf');}
+html,body{font-family: Font; font-size: 13px;}
+
+form{background-color: white; padding: 10px 20px; border-radius: 4px; opacity: 0.8}
+.itm{background: #DBDBDB; border-radius: 4px; padding: 10px 20px;}
+.nav-item{margin-left: 20px;}
+.circulo {
+    width: 12px;
+    height: 12px;
+    display: block;
+    float: left;
+    margin-left: 6px;
+    -moz-border-radius: 50%;
+    -webkit-border-radius: 50%;
+    border-radius: 50%;
+    background: #E0B913;
+}

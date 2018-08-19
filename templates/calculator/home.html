@@ -1,0 +1,139 @@
+{% extends 'calculator/base.html' %}
+
+{% block content %}
+<section class="d-flex justify-content-center">
+
+<form id="calculator" method="post" v-on:submit.prevent="setGuardar" class="col col-md-4 col-sm-12" style="margin-top: 80px">
+
+	<h2 style="text-align: center;">Calculadora</h2>
+	<br>
+	<div class="form-check" style="text-align: center;">
+		<input type="radio" class="form-check-input" id="materialGroupExample2" name="groupOfMaterialRadios" v-on:change="cambiarModo" checked>
+		<label class="form-check-label" for="materialGroupExample2">Para la compra</label>
+
+		<input type="radio" class="form-check-input" id="materialGroupExample1" name="groupOfMaterialRadios" v-on:change="cambiarModo">
+		<label class="form-check-label" for="materialGroupExample1">Para la venta</label>
+
+		
+	</div>
+	<br>
+	
+	<div class="md-form">
+        <label for="onx">ONX</label>
+        <input class="form-control" id="onx" type="text" v-model="onx" required="required" v-on:keyup="calculatorOnx">
+    </div>
+    <div class="md-form">
+        <label for="btc">BTC</label>
+        <input class="form-control" id="btc" type="text" v-model="btc" required="required" v-on:keyup="calculatorOnxBtc">
+    </div>
+    <div class="md-form">
+        <label for="vef">VEF</label>
+        <input class="form-control" id="vef" type="text" v-model="vef" required="required">
+    </div>
+    <div class="md-form">
+        <label for="usd">USD</label>
+        <input class="form-control" id="usd" type="text" v-model="usd" required="required" v-on:keyup="calculatorOnxUsd">
+    </div>
+</form>
+{% endblock %}
+
+{% block js %}
+<script type="text/javascript">
+	var funcion_activa = 'onx'
+    var form_registro = new Vue({
+        el:'#calculator',
+        delimiters: ['{', '}'],
+        data:{
+        	precio: 1,
+            onx: 1,            
+            btc: 0,
+            usd: 0,
+            vef: 0,
+            comprar:true,
+        },
+        created: function(){
+            this.buscar_cotizacion();
+        },
+        methods:{
+        	cambiarModo:function(){
+        		if(this.comprar == false)
+        			this.comprar = true
+        		else
+        			this.comprar = false
+
+        		if(funcion_activa == 'onx')
+        			this.calculatorOnx()
+        		else if(funcion_activa == 'usd')
+        			this.calculatorOnxUsd()
+        		else if(funcion_activa == 'btc')
+        			this.calculatorOnxBtc()
+        	},
+        	calculatorOnx: function(event){
+        		funcion_activa = 'onx'
+        		if (this.comprar == true){        			
+        			this.btc = parseFloat(parseFloat(localStorage.getItem("onx_btc_compra")) * parseFloat(this.onx)).toFixed(8)
+        			this.vef = parseFloat(parseFloat(localStorage.getItem("onx_bs_compra")) * parseFloat(this.onx)).toFixed(4)
+        			this.usd = parseFloat(parseFloat(localStorage.getItem("onx_usd_compra")) * parseFloat(this.onx))
+        		}else{
+        			this.btc = parseFloat(parseFloat(localStorage.getItem("onx_btc_venta")) * parseFloat(this.onx)).toFixed(8)
+        			this.vef = parseFloat(parseFloat(localStorage.getItem("onx_bs_venta")) * parseFloat(this.onx)).toFixed(4)
+        			this.usd = parseFloat(parseFloat(localStorage.getItem("onx_usd_venta")) * parseFloat(this.onx))
+        		}
+        	},
+        	calculatorOnxUsd: function (){
+        		funcion_activa = 'usd'
+        		if (this.comprar == true){ 
+        			this.onx = parseFloat(parseFloat(this.usd) / parseFloat(localStorage.getItem("onx_usd_compra"))).toFixed(8)
+        			this.btc = parseFloat(parseFloat(this.usd) * parseFloat(localStorage.getItem("onx_btc_compra"))  / parseFloat(localStorage.getItem("onx_usd_compra"))).toFixed(8)
+        			this.vef = parseFloat(parseFloat(this.usd) * parseFloat(localStorage.getItem("onx_bs_compra"))  / parseFloat(localStorage.getItem("onx_usd_compra"))).toFixed(8)
+
+        		}else{
+        			this.onx = parseFloat(parseFloat(this.usd) / parseFloat(localStorage.getItem("onx_usd_venta"))).toFixed(8)
+        			this.btc = parseFloat(parseFloat(this.usd) * parseFloat(localStorage.getItem("onx_btc_venta"))  / parseFloat(localStorage.getItem("onx_usd_venta"))).toFixed(8)
+        			this.vef = parseFloat(parseFloat(this.usd) * parseFloat(localStorage.getItem("onx_bs_venta"))  / parseFloat(localStorage.getItem("onx_usd_venta"))).toFixed(8)
+        		}
+        	},
+        	calculatorOnxBtc: function (){
+        		funcion_activa = 'btc'
+
+        		if (this.comprar == true){ 
+        			this.onx = parseFloat(parseFloat(this.btc) / parseFloat(localStorage.getItem("onx_btc_compra"))).toFixed(8)
+        			this.usd = parseFloat(parseFloat(this.btc) * parseFloat(localStorage.getItem("onx_usd_compra")) / parseFloat(localStorage.getItem("onx_btc_compra"))).toFixed(2)
+					this.vef = parseFloat(parseFloat(this.btc) * parseFloat(localStorage.getItem("onx_bs_compra")) / parseFloat(localStorage.getItem("onx_btc_compra"))).toFixed(2)
+        			
+        		}else{
+        			this.onx = parseFloat(parseFloat(this.btc) / parseFloat(localStorage.getItem("onx_btc_venta"))).toFixed(8)
+					this.usd = parseFloat(parseFloat(this.btc) * parseFloat(localStorage.getItem("onx_usd_venta")) / parseFloat(localStorage.getItem("onx_btc_venta"))).toFixed(2)
+					this.vef = parseFloat(parseFloat(this.btc) * parseFloat(localStorage.getItem("onx_bs_venta")) / parseFloat(localStorage.getItem("onx_btc_venta"))).toFixed(2)
+        		}
+
+        	},
+            buscar_cotizacion: function(){
+                axios.get('/api/v1/price/').then(response => {
+                    
+                    localStorage.setItem("onx_btc_compra", response.data.btc_onx_buy)
+                    localStorage.setItem("onx_usd_compra", response.data.usd_onx_buy)
+                    localStorage.setItem("onx_bs_compra", response.data.onx_bs_buy)
+                    localStorage.setItem("onx_btc_venta", response.data.btc_onx_sell)
+                    localStorage.setItem("onx_usd_venta", response.data.usd_onx_sell)
+                    localStorage.setItem("onx_bs_venta", response.data.onx_bs_sell)
+                    
+                    this.precio = response.data.btc_onx_buy
+                    this.btc = response.data.btc_onx_buy
+                    this.vef = parseFloat(response.data.onx_bs_buy).toFixed(4)
+                    this.usd = parseFloat(response.data.usd_onx_buy)
+
+                    
+
+                    $('#onx_btc').text(this.btc)
+                    $('#onx_usd').text(this.usd)
+                    $('#onx_bs_venta').text(parseFloat(response.data.onx_bs_sell).toFixed(4))
+                    $('#onx_bs_compra').text(parseFloat(response.data.onx_bs_buy).toFixed(4))
+                })
+
+            },
+            
+        }
+    });
+</script>
+{% endblock %}

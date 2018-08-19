@@ -1,0 +1,40 @@
+{% load staticfiles %}
+<header style="margin-bottom: 20px; z-index: 10; position: relative;">
+
+    <nav class="navbar navbar-expand-lg ">
+        <a class="navbar-brand" href="/"><img src ="{% static 'calculator/images/logo.png' %}"></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                
+            </ul>
+            <ul class="navbar-nav nav-flex-icons">
+                <li class="nav-item">
+                    <div class="itm">
+                        ONX / BTC <i id="onx_btc"></i>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <div class="itm">
+                        ONX / USD <i id="onx_usd"></i>
+                    </div>
+                </li>                
+                <li class="nav-item">
+                    <div class="itm">
+                        <span class="circulo" style="background: green!important"></span>
+                        <strong style="padding-left: 6px;">Compra BsS: <i id="onx_bs_compra"></i></strong>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <div class="itm">
+                        <span class="circulo"></span>
+                        <strong style="padding-left: 6px;">Venta BsS: <i id="onx_bs_venta"></i></strong>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+</header>
