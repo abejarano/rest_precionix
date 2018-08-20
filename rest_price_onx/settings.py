@@ -25,7 +25,7 @@ SECRET_KEY = '!46#9prd*m1m0r@fhg%&h8w750&uentv@3e2onr+v1^ap8w9_j'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1', '138.197.101.162']
 
 
 # Application definition
@@ -39,7 +39,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'rest_framework.authtoken',
-    'rest_framework_swagger',
     'corsheaders',
     'price_onixcoin',
 ]
@@ -141,8 +140,15 @@ if DEV:
 
     DATABASES = {
         'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'OPTIONS': {
+                'options': '-c search_path=onx'
+            },
+            'NAME': 'postgres',
+            'USER': 'postgres',
+            'PASSWORD': 'postgres',
+            'HOST': '127.0.0.1',
+            'PORT': '5432'
         }
     }
     # CONFIGURACION REST_FRAMEWORK
