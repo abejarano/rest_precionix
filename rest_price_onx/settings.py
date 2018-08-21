@@ -25,7 +25,7 @@ SECRET_KEY = '!46#9prd*m1m0r@fhg%&h8w750&uentv@3e2onr+v1^ap8w9_j'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', '138.197.101.162','precio.onixcoin.com']
+ALLOWED_HOSTS = ['127.0.0.1', '104.236.225.0']
 
 
 # Application definition
