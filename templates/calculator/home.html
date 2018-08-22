@@ -28,7 +28,7 @@
     </div>
     <div class="md-form">
         <label for="vef">VEF</label>
-        <input class="form-control" id="vef" type="text" v-model="vef" required="required">
+        <input class="form-control" id="vef" type="text" v-model="vef" required="required" v-on:keyup="calculatorOnxBs">
     </div>
     <div class="md-form">
         <label for="usd">USD</label>
@@ -67,6 +67,8 @@
         			this.calculatorOnxUsd()
         		else if(funcion_activa == 'btc')
         			this.calculatorOnxBtc()
+                else if(funcion_activa == 'bs')
+        			this.calculatorOnxBs()
         	},
         	calculatorOnx: function(event){
         		funcion_activa = 'onx'
@@ -108,8 +110,22 @@
         		}
 
         	},
+            calculatorOnxBs: function(){
+        	    funcion_activa = 'bs'
+
+        		if (this.comprar == true){
+        			this.onx = parseFloat(parseFloat(this.vef) / parseFloat(localStorage.getItem("onx_bs_compra"))).toFixed(4)
+        			this.usd = parseFloat(parseFloat(this.vef) * parseFloat(localStorage.getItem("onx_usd_compra")) / parseFloat(localStorage.getItem("onx_bs_compra"))).toFixed(4)
+					this.btc = parseFloat(parseFloat(this.vef) * parseFloat(localStorage.getItem("onx_btc_compra")) / parseFloat(localStorage.getItem("onx_bs_compra"))).toFixed(8)
+
+        		}else{
+        			this.onx = parseFloat(parseFloat(this.vef) / parseFloat(localStorage.getItem("onx_bs_venta"))).toFixed(4)
+					this.usd = parseFloat(parseFloat(this.vef) * parseFloat(localStorage.getItem("onx_usd_venta")) / parseFloat(localStorage.getItem("onx_bs_venta"))).toFixed(4)
+					this.btc = parseFloat(parseFloat(this.vef) * parseFloat(localStorage.getItem("onx_btc_venta")) / parseFloat(localStorage.getItem("onx_bs_venta"))).toFixed(8)
+        		}
+            },
             buscar_cotizacion: function(){
-                axios.get('/api/v1/price/').then(response => {
+                axios.get('http://precio.onixcoin.com/api/v1/price/').then(response => {
                     
                     localStorage.setItem("onx_btc_compra", response.data.btc_onx_buy)
                     localStorage.setItem("onx_usd_compra", response.data.usd_onx_buy)
