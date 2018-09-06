@@ -125,7 +125,7 @@
         		}
             },
             buscar_cotizacion: function(){
-                axios.get('http://precio.onixcoin.com/api/v1/price/').then(response => {
+                axios.get('https://precio.onixcoin.com/api/v1/price/').then(response => {
                     
                     localStorage.setItem("onx_btc_compra", response.data.btc_onx_buy)
                     localStorage.setItem("onx_usd_compra", response.data.usd_onx_buy)
