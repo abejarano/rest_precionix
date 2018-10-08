@@ -167,3 +167,6 @@ if DEV:
     }
 else:
     from rest_price_onx.settings_server import *
+
+
+GEOIP_PATH = BASE_DIR + '/rest_price_onx/geo/GeoLite2-Country.mmdb'
