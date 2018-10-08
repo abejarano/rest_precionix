@@ -3,6 +3,6 @@ from .views import *
 
 
 urlpatterns = [
-    path('price/', Price.as_view()),
+    path('price/<country>/', Price.as_view()),
 
 ]
